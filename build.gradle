@@ -17,7 +17,6 @@ buildscript {
 plugins {
     id 'java'
     id 'application'
-    id 'com.github.johnrengelman.shadow' version '1.2.4'
 }
 
 apply plugin: 'kotlin'
@@ -35,23 +34,4 @@ dependencies {
     compile group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: '0.19'
     compile group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-nio', version: '0.19'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
-}
-
-// Naming and packaging settings for the "shadow jar".
-shadowJar {
-    baseName = 'app'
-    classifier = 'shadow'
-
-    manifest {
-        attributes 'Main-Class': mainClassName
-    }
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '3.3'
-}
-
-// Heroku relies on the 'stage' task to deploy.
-task stage {
-    dependsOn shadowJar
 }
